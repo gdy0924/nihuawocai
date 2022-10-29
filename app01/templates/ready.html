@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>准备阶段</title>
+    {#    <link rel="stylesheet" href="static/css/ready.css">#}
+    <link rel="stylesheet" href="{% static 'css/ready.css' %}">
+    {#    <link rel="stylesheet" href="./static/css/font-awesome-4.7.0/css/font-awesome.min.css">#}
+    <link rel="stylesheet" href="{% static 'css/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    {#    <link rel="stylesheet" href="./static/css/font_3601417_6klr1jsushc/iconfont.css">#}
+    <link rel="stylesheet" href="{% static 'css/font_3601417_6klr1jsushc/iconfont.css' %}">
+    <script>
+        window.onload = function () {
+            var temp = document.getElementsByClassName("color-select")
+            var colors = [...temp[0].childNodes, ...temp[1].childNodes]
+            for (let i = 0; i < colors.length; i++) {
+                colors[i].onclick = function () {
+                    var temp = document.getElementsByClassName("color")
+                    for (let j = 0; j < temp.length; j++) {
+                        temp[j].style.border = "none"
+                    }
+                    colors[i].style.border = "3px solid rgba(0, 0, 0, 0.5)"
+                }
+            }
+
+            var lines = document.getElementById("line-select").childNodes
+            for (let i = 0; i < lines.length; i++) {
+                lines[i].onclick = function () {
+                    var temp = document.getElementsByClassName("level-wrapper")
+                    for (let j = 0; j < temp.length; j++) {
+                        temp[j].style.border = "none"
+                    }
+                    lines[i].style.border = "3px solid rgba(0, 0, 0, 0.5)"
+                }
+            }
+
+            var adds = document.getElementsByClassName("add-player")
+            for (let i = 0; i < adds.length; i++) {
+                adds[i].onclick = function () {
+                    document.getElementById("pop-wrapper").style.display = "block"
+                }
+            }
+
+            document.getElementById("close").onclick = function () {
+                document.getElementById("pop-wrapper").style.display = "none"
+            }
+
+            document.getElementById("copy-btn").onclick = function () {
+                var aux = document.createElement("input");
+                aux.setAttribute("value", document.getElementById("copy-content").innerText);
+                document.body.appendChild(aux);
+                aux.select();
+                document.execCommand("copy");
+                document.body.removeChild(aux);
+                alert("复制成功");
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="left">
+        <div id="header">
+            <a href="{% url 'add_room' %}">
+                {#                <img id="out" src="./static/img/stLine-come-l.svg" alt="">#}
+                <img id="out" src="{% static 'img/stLine-come-l.svg' %}" alt="">
+            </a>
+            <div id="room-id">房间号：12345</div>
+            <div id="title">准备阶段</div>
+        </div>
+        <div id="panel">
+            <!-- 点击开始 -->
+            <a href="{% url 'start' %}">
+                <button id="start-btn">马上开始</button>
+            </a>
+        </div>
+        <div id="operator">
+            <div>
+                <div class="color-select">
+                    <div class="color" id="white"></div>
+                    <div class="color" id="yellow"></div>
+                    <div class="color" id="green"></div>
+                    <div class="color" id="blue"></div>
+                </div>
+                <div class="color-select">
+                    <div class="color" id="red"></div>
+                    <div class="color" id="purple"></div>
+                    <div class="color" id="gray"></div>
+                    <div class="color" id="black"></div>
+                </div>
+            </div>
+            <div id="line-select">
+                <div class="level-wrapper">
+                    <div id="level1"></div>
+                </div>
+                <div class="level-wrapper">
+                    <div id="level2"></div>
+                </div>
+                <div class="level-wrapper">
+                    <div id="level3"></div>
+                </div>
+                <div class="level-wrapper">
+                    <div id="level4"></div>
+                </div>
+            </div>
+            <div id="extra">
+                {#                <img src="./static/img/fas%20fa-eraser.svg"/>#}
+                <img src="{% static 'img/fas%20fa-eraser.svg' %}"/>
+                {#                <img src="./static/img/arcoDesign-undo.svg"/>#}
+                <img src="{% static 'img/arcoDesign-undo.svg' %}"/>
+                {#                <img src="./static/img/arcoDesign-redo.svg"/>#}
+                <img src="{% static 'img/arcoDesign-redo.svg' %}"/>
+            </div>
+        </div>
+        <div id="player-list">
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img class="add-player" src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img class="add-player" style="width:77px; height:77px;" src="{% static 'img/1.png' %}" alt=""/>
+
+                <div class="player-name">player1</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img class="add-player" src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img class="add-player" src="{% static 'img/ze-add-o%20Copy.svg' %}" alt=""/>
+                <div class="player-name">player2</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img class="add-player" src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img class="add-player" src="{% static 'img/ze-add-o%20Copy.svg' %}" alt=""/>
+                <div class="player-name">player3</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img class="add-player" src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img class="add-player" src="{% static 'img/ze-add-o%20Copy.svg' %}" alt=""/>
+                <div class="player-name">player4</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img class="add-player" src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img class="add-player" src="{% static 'img/ze-add-o%20Copy.svg' %}" alt=""/>
+                <div class="player-name">player5</div>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div id="camera"></div>
+        <div id="chat">
+            <div id="chat-title">聊天框</div>
+            <div id="content"></div>
+            <div id="bottom">
+                <input id="answer-input" placeholder="在此输入答案">
+                <button id="send-btn">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pop-wrapper">
+    <i id="close" class="fa fa-times fa-3x" aria-hidden="true"></i>
+    <div id="send">发给好友一起玩</div>
+    <div id="copy-wrapper">
+        <input id="copy-content" type="text" placeholder="https://www.baidu.com">
+        <button id="copy-btn">复制</button>
+    </div>
+</div>
+</body>
+</html>

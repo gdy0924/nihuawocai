@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    {#    <link rel="stylesheet" href="./static/css/font-awesome-4.7.0/css/font-awesome.min.css">#}
+    <link rel="stylesheet" href="{% static 'css/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    {#    <link rel="stylesheet" href="static/css/index.css">#}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script>
+        window.onload = function () {
+            var update = document.getElementById("update")
+            update.onclick = function () {
+                document.getElementById("pop-wrapper").style.display = "flex"
+                document.getElementById("Popup-MaskData").style.display = "block"
+            }
+
+            document.getElementById("cancel").onclick = function () {
+                document.getElementById("pop-wrapper").style.display = "none"
+                document.getElementById("Popup-MaskData").style.display = "none"
+            }
+
+            document.getElementById("upload").onclick = function () {
+                document.getElementById("file-select").click()
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="Popup-MaskData"></div>
+<div id="container" class="container">
+    <div class="title-wrapper">
+        <div id="title">你画我猜</div>
+    </div>
+
+    <div class="main">
+        <div class="left">
+            <div id="logo-wrapper">
+                {#                <img id="logo" src="./static/img/logo.png" alt="">#}
+                <img id="logo" src="{% static 'img/logo.png' %}" alt="">
+                <div id="update">
+                    <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <div id="pop-wrapper">
+                <button id="upload">本地相册选择</button>
+                <input type="file" id="file-select" style="display:none;" accept="image/*">
+                <button id="show-big">查看大图</button>
+                <button id="cancel">取消</button>
+            </div>
+
+            <div class="nickname-wrapper">
+                <i id="user-icon" class="fa fa-user-o fa-3x" aria-hidden="true"></i>
+                <label id="nickname-input-label">
+                    <input id="nickname-input" type="text" placeholder="输入昵称"/>
+                </label>
+            </div>
+
+            <div class="btn-list">
+                <a href="{% url 'read' %}">
+                    <button class="btn">快速进入</button>
+                </a>
+                <a href="{% url 'add_room' %}">
+                    <button class="btn">创建房间</button>
+                </a>
+                <a href="{% url 'add_room' %}">
+                    <button class="btn">加入房间</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="right">
+            <div id="game-rules-title">游戏规则</div>
+            <div id="game-rules">
+                <p>1.每组游戏共有5个玩家</p>
+                <p> 2.按照玩家进入房间的顺序依次绘画， 当正确词语被猜出，游戏可进入下一轮或结束</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

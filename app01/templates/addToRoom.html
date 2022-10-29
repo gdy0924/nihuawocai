@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加入房间</title>
+    {#    <link rel="stylesheet" href="static/css/addToRoom.css">#}
+    <link rel="stylesheet" href="{% static 'css/addToRoom.css' %}">
+    <script>
+        window.onload = function () {
+            var tds = document.querySelectorAll("#select td")
+            for (let i = 0; i < tds.length - 1; i++) {
+                tds[i].onclick = function () {
+                    var nums = document.getElementsByClassName("num")
+                    for (let j = 0; j < nums.length; j++) {
+                        if (nums[j].innerHTML.trim() === '') {
+                            nums[j].innerHTML = tds[i].innerHTML
+                            break
+                        }
+                    }
+                }
+            }
+            tds[tds.length - 1].onclick = function () {
+                var nums = document.getElementsByClassName("num")
+                for (let j = nums.length - 1; j >= 0; j--) {
+                    if (nums[j].innerHTML.trim() !== '') {
+                        nums[j].innerHTML = ""
+                        break
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <a href="{% url 'index' %}">
+        {#        <img style="float: left; transform: rotateY(180deg);" id="out" src="./static/img/stLine-come-l.svg" alt="">#}
+        <img style="float: left; transform: rotateY(180deg);" id="out" src="{% static 'img/stLine-come-l.svg' %}"
+             alt="">
+    </a>
+    <div id="title">加入房间</div>
+
+    <div class="num-list">
+        <div class="num"></div>
+        <div class="num"></div>
+        <div class="num"></div>
+        <div class="num"></div>
+        <div class="num"></div>
+    </div>
+
+    <div id="select-wrapper">
+        <a href="{% url 'read' %}">
+            <button id="finish-btn">完成</button>
+        </a>
+        <table id="select">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td class="spec">.</td>
+                <td>0</td>
+                {#                <td class="spec"><img src="./static/img/图标.svg" alt=""/></td>#}
+                <td class="spec"><img src="{% static 'static/img/图标.svg' %}" alt=""/></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

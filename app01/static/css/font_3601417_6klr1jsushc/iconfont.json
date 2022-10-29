@@ -1,0 +1,23 @@
+{
+  "id": "3601417",
+  "name": "money",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1330567",
+      "name": "朋友圈",
+      "font_class": "pengyouquan",
+      "unicode": "e73b",
+      "unicode_decimal": 59195
+    },
+    {
+      "icon_id": "9186710",
+      "name": "QQ空间",
+      "font_class": "QQkongjian",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    }
+  ]
+}

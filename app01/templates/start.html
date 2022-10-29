@@ -1,0 +1,465 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏开始</title>
+    {#    <meta http-equiv="refresh" content="2">#}
+    {#    <link rel="stylesheet" href="static/css/ready.css">#}
+    <link rel="stylesheet" href="{% static 'css/ready.css' %}">
+    <script>
+        window.onload = function () {
+            var temp = document.getElementsByClassName("color-select")
+            var colors = [...temp[0].childNodes, ...temp[1].childNodes]
+            for (let i = 0; i < colors.length; i++) {
+                colors[i].onclick = function () {
+                    var temp = document.getElementsByClassName("color")
+                    for (let j = 0; j < temp.length; j++) {
+                        temp[j].style.border = "none"
+                    }
+                    colors[i].style.border = "3px solid rgba(0, 0, 0, 0.5)"
+                }
+            }
+
+            var lines = document.getElementById("line-select").childNodes
+            for (let i = 0; i < lines.length; i++) {
+                lines[i].onclick = function () {
+                    var temp = document.getElementsByClassName("level-wrapper")
+                    for (let j = 0; j < temp.length; j++) {
+                        temp[j].style.border = "none"
+                    }
+                    lines[i].style.border = "3px solid rgba(0, 0, 0, 0.5)"
+                }
+            }
+
+            var interval = setInterval(function () {
+                var secNode = document.getElementById("countdown")
+                var sec = parseInt(secNode.innerText)
+                if (sec === 0) {
+                    clearInterval(interval)
+
+                    document.getElementById("Popup-MaskData").style.display = "block"
+                    document.getElementById("end-wrapper").style.display = 'block';
+
+                } else {
+                    secNode.innerText = sec - 1
+                }
+            }, 1000)
+
+
+            var heartChange = false
+            var heart = document.getElementById("heart")
+            heart.onclick = function () {
+                if (heartChange === false) {
+                    heart.src = "{% static 'img/heartred.png' %}"
+                    heartChange = true
+                }
+            }
+
+            var lookList = document.getElementById("look-list");
+            lookList.onclick = function () {
+                document.getElementById("Popup-MaskData").style.display = "block"
+                document.getElementById("end-wrapper").style.display = 'none'
+                document.getElementById("best-of-all").style.display = 'flex'
+                const back = document.getElementById("back")
+                back.style.display = 'block'
+                back.style.top = '64px'
+                back.style.left = '147px'
+
+            }
+
+            var back = document.getElementById("back");
+            back.onclick = function () {
+                document.getElementById("end-wrapper").style.display = 'block'
+                document.getElementById("best-of-all").style.display = 'none'
+                back.style.display = 'none'
+            }
+
+            var example = document.getElementById("example")
+            example.onclick = function () {
+                example.style.display = 'none'
+                document.getElementById("answer").style.display = 'block'
+            }
+        }
+    </script>
+    <script>
+        /*
+             // 图片实时刷新
+             window.onload = function () {
+                 let old_url = document.getElementById("img_random").src
+                 console.log(old_url)
+
+                 function reload_image() {
+                     let url = document.getElementById("img_random").src = old_url + "?" + Math.random();
+
+                     console.log(url)
+                 }
+
+                 reload_image()
+                 //setInterval("reload_image()", 100)
+{#setTimeout(reload_image(), 20000);#}
+        }
+        */
+    </script>
+</head>
+<body>
+<div class="container">
+
+    <div class="left">
+        <div id="header">
+            <a href="{% url 'read' %}">
+                {#                <img id="out" src="./static/img/stLine-come-l.svg" alt="">#}
+                <img id="out" src="{% static 'img/stLine-come-l.svg' %}" alt="">
+            </a>
+            <div id="room-id">房间号：12345</div>
+            <div id="title">答案：鼠标</div>
+        </div>
+        <div id="panel">
+            <div class="left">
+                <div id="time">
+                    {#                <img src="./static/img/st-clock.svg" alt=""/>#}
+                    <img src="{% static 'img/st-clock.svg' %}" alt=""/>
+                    <span id="countdown">10</span>秒
+                </div>
+
+                <div id="answer">
+                    <img src="{% static 'img/answer.png' %}" alt="">
+                    <br>
+                    <br>
+                    <span>鼠 &nbsp;&nbsp;标</span>
+                </div>
+
+                {#图片示例start#}
+                <div id="example">
+                    图片示例
+                </div>
+                {#图片示例end#}
+            </div>
+
+
+            <!--画布 -->
+            <img src="{% url 'draw3' %}" alt="是" style="width: 700px;height:243px;color: red" id="img_random">
+
+
+        </div>
+
+
+        <div id="operator">
+            <div style="display:flex; flex-direction: column">
+                <div class="color-select">
+                    <div class="color" id="white"></div>
+                    <div class="color" id="yellow"></div>
+                    <div class="color" id="green"></div>
+                    <div class="color" id="blue"></div>
+                </div>
+                <div class="color-select">
+                    <div class="color" id="red"></div>
+                    <div class="color" id="purple"></div>
+                    <div class="color" id="gray"></div>
+                    <div class="color" id="black"></div>
+                </div>
+            </div>
+            <div id="line-select">
+                <div class="level-wrapper">
+                    <div id="level1"></div>
+                </div>
+                <div class="level-wrapper">
+                    <div id="level2"></div>
+                </div>
+                <div class="level-wrapper">
+                    <div id="level3"></div>
+                </div>
+                <div class="level-wrapper">
+                    <div id="level4"></div>
+                </div>
+            </div>
+            <div id="extra">
+                {#                <img src="./static/img/fas%20fa-eraser.svg"/>#}
+                <img src="{% static 'img/fas%20fa-eraser.svg' %}"/>
+                {#                <img src="./static/img/arcoDesign-undo.svg"/>#}
+                <img src="{% static 'img/arcoDesign-undo.svg' %}"/>
+                {#                <img src="./static/img/arcoDesign-redo.svg"/>#}
+                <img src="{% static 'img/arcoDesign-redo.svg' %}"/>
+            </div>
+        </div>
+        <div id="player-list">
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img src="{% static 'img/1.png' %}" style="width:77px; height:77px;" alt=""/>
+                <div class="player-name">player1</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img src="{% static 'img/2.png' %}" style="width:77px; height:77px;" alt=""/>
+                <div class="player-name">player2</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img src="{% static 'img/3.png' %}" style="width:77px; height:77px;" alt=""/>
+                <div class="player-name">player3</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img src="{% static 'img/4.png' %}" style="width:77px; height:77px;" alt=""/>
+                <div class="player-name">player4</div>
+            </div>
+            <div class="player" style="display:flex;flex-direction: column;align-items:center;">
+                {#                <img src="./static/img/ze-add-o%20Copy.svg" alt=""/>#}
+                <img src="{% static 'img/5.png' %}" style="width:77px; height:77px;" alt=""/>
+                <div class="player-name">player5</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right">
+        <div id="camera">
+            <!--摄像头 -->
+            <img src="{% url 'draw2' %}" alt="" style="width: 100%">
+        </div>
+        <div id="chat">
+            <div id="chat-title">聊天框</div>
+            <div id="content">
+                <div class="chat-content">
+                    {#                    <img src="./static/img/图片%202%20Copy@1x.png" alt=""/>#}
+                    <img style="width:50px;height:50px;" src="{% static 'img/3.png' %}" alt=""/>
+                    <div class="frame">
+                        <div class="triangle"></div>
+                        <span class="rotationtiao">电脑</span>
+                    </div>
+                </div>
+                <div class="chat-content">
+                    {#                    <img src="./static/img/图片%202%20Copy@1x.png" alt=""/>#}
+                    <img style="width:50px;height:50px;" src="{% static 'img/2.png' %}" alt=""/>
+                    <div class="frame">
+                        <div class="triangle"></div>
+                        <span class="rotationtiao">键盘</span>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom">
+                <input id="answer-input" placeholder="在此输入答案">
+                <button id="send-btn">发送</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="Popup-MaskData"></div>
+
+{#获胜start#}
+<div id="end-wrapper">
+    <div id="top">
+        <span>获</span>
+        <div class="player">
+            {#            <img src="./static/img/图片%202%20Copy@1x.png" alt=""/>#}
+            <img style="height : 94px; width:94px" src="{% static 'img/4.png' %}" alt=""/>
+        </div>
+        <span>胜</span>
+    </div>
+    <div id="center">
+        <img id="heart" style="width:150px; height: 150px;position: relative;left: 40%;top:20%"
+             src="{% static 'img/heartwu.png' %}" alt=""/>
+        <div style="top:25%;">正确答案：鼠标</div>
+        <div style="left:33%;top:25%;">
+            {#                 <a href="{% url 'read' %}">#}
+            {#                    查看榜单#}
+            {#                </a>#}
+            <a href="javascript:;" id="look-list">
+                查看榜单
+            </a>
+            <a href="{% url 'read' %}">
+                返回
+            </a>
+            <a href="{% url 'start' %}">
+                再来一局
+            </a>
+        </div>
+        <!--        <div id="btn-wrapper">-->
+        <!--            -->
+        <!--        </div>-->
+    </div>
+</div>
+{#获胜end#}
+{#榜单start#}
+<div id="best-of-all">
+    <div class="left">
+        <div class="head">
+            <span>总分榜</span>
+        </div>
+        <div class="content">
+            <div class="num one">
+                <div class="top">1</div>
+                <div class="msg">
+                    <img src="{% static 'img/2.png' %}" alt="">
+                    <br>
+                    Player2
+                </div>
+                <div class="score">10</div>
+            </div>
+            <div class="num two">
+                <div class="top">2</div>
+                <div class="msg">
+                    <img src="{% static 'img/1.png' %}" alt="">
+                    <br>
+                    Player1
+                </div>
+                <div class="score">8</div>
+            </div>
+            <div class="num three">
+                <div class="top">3</div>
+                <div class="msg">
+                    <img src="{% static 'img/3.png' %}" alt="">
+                    <br>
+                    Player3
+                </div>
+                <div class="score">6</div>
+            </div>
+            <div class="num four">
+                <div class="top">4</div>
+                <div class="msg">
+                    <img src="{% static 'img/4.png' %}" alt="">
+                    <br>
+                    Player4
+                </div>
+                <div class="score">3</div>
+            </div>
+            <div class="num five">
+                <div class="top">5</div>
+                <div class="msg">
+                    <img src="{% static 'img/5.png' %}" alt="">
+                    <br>
+                    Player5
+                </div>
+                <div class="score">1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="middle">
+        <div class="head">
+            <span>单场MVP获赞榜</span>
+        </div>
+        <div class="content">
+            <div class="num one">
+                <div class="top">1</div>
+                <div class="msg">
+                    <img src="{% static 'img/1.png' %}" alt="">
+                    <br>
+                    Player1
+                </div>
+                <div class="score">4</div>
+            </div>
+            <div class="num two">
+                <div class="top">2</div>
+                <div class="msg">
+                    <img src="{% static 'img/2.png' %}" alt="">
+                    <br>
+                    Player2
+                </div>
+                <div class="score">3</div>
+            </div>
+            <div class="num three">
+                <div class="top">3</div>
+                <div class="msg">
+                    <img src="{% static 'img/3.png' %}" alt="">
+                    <br>
+                    Player3
+                </div>
+                <div class="score">2</div>
+            </div>
+            <div class="num four">
+                <div class="top">4</div>
+                <div class="msg">
+                    <img src="{% static 'img/5.png' %}" alt="">
+                    <br>
+                    Player5
+                </div>
+                <div class="score">1</div>
+            </div>
+            <div class="num five">
+                <div class="top">5</div>
+                <div class="msg">
+                    <img src="{% static 'img/4.png' %}" alt="">
+                    <br>
+                    Player4
+                </div>
+                <div class="score">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="head">
+            <span>玩家荣耀称号</span>
+        </div>
+        <div class="content">
+            <div class="num one">
+                <div class="msg">
+                    <img src="{% static 'img/1.png' %}" alt="">
+                    <br>
+                    Player1
+                </div>
+                <div class="honor">猜词大王</div>
+            </div>
+            <div class="num two">
+                <div class="msg">
+                    <img src="{% static 'img/2.png' %}" alt="">
+                    <br>
+                    Player2
+                </div>
+                <div class="honor" style="color: red;">神笔马良</div>
+            </div>
+            <div class="num three">
+                <div class="msg">
+                    <img src="{% static 'img/3.png' %}" alt="">
+                    <br>
+                    Player3
+                </div>
+                <div class="honor" style="color: green;">卓越画家</div>
+            </div>
+            <div class="num four">
+                <div class="msg">
+                    <img src="{% static 'img/4.png' %}" alt="">
+                    <br>
+                    Player4
+                </div>
+                <div class="honor" style="color: yellow;">优秀画家</div>
+            </div>
+            <div class="num five">
+                <div class="msg">
+                    <img src="{% static 'img/5.png' %}" alt="">
+                    <br>
+                    Player5
+                </div>
+                <div class="honor" style="color: yellow;">优秀画家</div>
+            </div>
+        </div>
+    </div>
+</div>
+{#榜单end#}
+
+<div id="back">
+    <img id="out" src="{% static 'img/stLine-come-l.svg' %}" alt="">
+</div>
+</body>
+<script src="{% static 'js/jquery_3.6.1.js' %}"></script>
+<script>
+    // 点击验证码刷新
+    $(function () {
+        remind();
+    })
+
+    //解决画布延迟问题，100毫秒像后端发送一次请求，获取最新的画布
+    function remind() {
+        var old_url = 'http://127.0.0.1:8000/draw3/'
+        //定时器 setInterval 默认根据配置的时间，自动去循环执行
+        setInterval(function () {
+            var new_url = $('#img_random').attr('src', old_url + '?' + Math.random())
+            //console.log('old_url', old_url)
+            //console.log('new_url', new_url)
+        }, 1000)
+    }
+
+</script>
+
+</html>
